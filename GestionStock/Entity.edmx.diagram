@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="4eb527c831ba40ebaf3a6a839af7612a" Name="Diagram1">
+        <EntityTypeShape EntityType="StockModel.Categorie" Width="1.5" PointX="5.75" PointY="5.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="StockModel.Client" Width="1.5" PointX="3" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="StockModel.Commande" Width="1.5" PointX="5.25" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="StockModel.User" Width="1.5" PointX="3" PointY="5" IsExpanded="true" />
+        <EntityTypeShape EntityType="StockModel.Ville" Width="1.5" PointX="0.75" PointY="1.375" IsExpanded="true" />
+        <AssociationConnector Association="StockModel.FK__Client__ville_id__267ABA7A" ManuallyRouted="false" />
+        <AssociationConnector Association="StockModel.FK__Commande__Id_Cli__300424B4" ManuallyRouted="false" />
+        <AssociationConnector Association="StockModel.FK__Commande__Nom_Ve__30F848ED" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="StockModel.Detail_Commande" Width="1.5" PointX="10.25" PointY="3.25" />
+        <AssociationConnector Association="StockModel.FK__Detail_Co__Id_Pr__49C3F6B7" />
+        <EntityTypeShape EntityType="StockModel.sysdiagram" Width="1.5" PointX="7.375" PointY="0.75" />
+        <EntityTypeShape EntityType="StockModel.Produit" Width="1.5" PointX="8" PointY="4.875" />
+        <AssociationConnector Association="StockModel.FK__Produit__ID_Cate__5441852A" />
+        <AssociationConnector Association="StockModel.FK__Detail_Co__Id_co__571DF1D5" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

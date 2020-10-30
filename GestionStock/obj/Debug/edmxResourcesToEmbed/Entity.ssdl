@@ -1,0 +1,199 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="StockModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Categorie">
+    <Key>
+      <PropertyRef Name="ID_Categorie" />
+    </Key>
+    <Property Name="ID_Categorie" Type="varchar" MaxLength="15" Nullable="false" />
+    <Property Name="Des_Categorie" Type="varchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="Client">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="varchar" MaxLength="15" Nullable="false" />
+    <Property Name="Nom_Client" Type="varchar" MaxLength="30" />
+    <Property Name="Telephone" Type="varchar" MaxLength="20" />
+    <Property Name="E-mail" Type="varchar" MaxLength="50" />
+    <Property Name="ville_id" Type="varchar" MaxLength="15" />
+  </EntityType>
+  <EntityType Name="Commande">
+    <Key>
+      <PropertyRef Name="Id_commande" />
+    </Key>
+    <Property Name="Id_commande" Type="varchar" MaxLength="15" Nullable="false" />
+    <Property Name="Id_Client" Type="varchar" MaxLength="15" />
+    <Property Name="Date_Commande" Type="date" />
+    <Property Name="DES_Commande" Type="varchar" MaxLength="250" />
+    <Property Name="Nom_Vendeur" Type="varchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="Detail_Commande">
+    <Key>
+      <PropertyRef Name="Id_Produit" />
+      <PropertyRef Name="Id_commande" />
+    </Key>
+    <Property Name="Id_Produit" Type="varchar" MaxLength="15" Nullable="false" />
+    <Property Name="Id_commande" Type="varchar" MaxLength="15" Nullable="false" />
+    <Property Name="Prix" Type="float" />
+    <Property Name="Quantite" Type="int" />
+    <Property Name="Montant" Type="float" />
+    <Property Name="réduction" Type="float" />
+    <Property Name="Montant total" Type="float" />
+  </EntityType>
+  <EntityType Name="Produit">
+    <Key>
+      <PropertyRef Name="Id_Produit" />
+    </Key>
+    <Property Name="Id_Produit" Type="varchar" MaxLength="15" Nullable="false" />
+    <Property Name="ID_Categorie" Type="varchar" MaxLength="15" />
+    <Property Name="Nom_Produit" Type="varchar" MaxLength="40" />
+    <Property Name="Quantite" Type="int" />
+    <Property Name="Prix" Type="float" />
+    <Property Name="Image_Produit" Type="image" />
+  </EntityType>
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="principal_id" Type="int" Nullable="false" />
+    <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="version" Type="int" />
+    <Property Name="definition" Type="varbinary(max)" />
+  </EntityType>
+  <EntityType Name="User">
+    <Key>
+      <PropertyRef Name="login" />
+    </Key>
+    <Property Name="login" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Mot_de_passe" Type="varchar" MaxLength="50" />
+    <Property Name="User_Type" Type="varchar" MaxLength="50" />
+    <Property Name="Nom_Complet" Type="varchar" MaxLength="50" />
+    <Property Name="Profil" Type="image" />
+  </EntityType>
+  <EntityType Name="Ville">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="varchar" MaxLength="15" Nullable="false" />
+    <Property Name="Nom" Type="varchar" MaxLength="50" />
+  </EntityType>
+  <Association Name="FK__Client__ville_id__267ABA7A">
+    <End Role="Ville" Type="Self.Ville" Multiplicity="0..1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Client" Type="Self.Client" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Ville">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Client">
+        <PropertyRef Name="ville_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Commande__Id_Cli__300424B4">
+    <End Role="Client" Type="Self.Client" Multiplicity="0..1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Commande" Type="Self.Commande" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Client">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Commande">
+        <PropertyRef Name="Id_Client" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Commande__Nom_Ve__30F848ED">
+    <End Role="User" Type="Self.User" Multiplicity="0..1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Commande" Type="Self.Commande" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="login" />
+      </Principal>
+      <Dependent Role="Commande">
+        <PropertyRef Name="Nom_Vendeur" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Detail_Co__Id_co__5CD6CB2B">
+    <End Role="Produit" Type="Self.Produit" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Detail_Commande" Type="Self.Detail_Commande" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Produit">
+        <PropertyRef Name="Id_Produit" />
+      </Principal>
+      <Dependent Role="Detail_Commande">
+        <PropertyRef Name="Id_commande" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Detail_Co__Id_Pr__5DCAEF64">
+    <End Role="Commande" Type="Self.Commande" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Detail_Commande" Type="Self.Detail_Commande" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Commande">
+        <PropertyRef Name="Id_commande" />
+      </Principal>
+      <Dependent Role="Detail_Commande">
+        <PropertyRef Name="Id_Produit" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Produit__ID_Cate__5441852A">
+    <End Role="Categorie" Type="Self.Categorie" Multiplicity="0..1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Produit" Type="Self.Produit" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Categorie">
+        <PropertyRef Name="ID_Categorie" />
+      </Principal>
+      <Dependent Role="Produit">
+        <PropertyRef Name="ID_Categorie" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="StockModelStoreContainer">
+    <EntitySet Name="Categorie" EntityType="Self.Categorie" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Client" EntityType="Self.Client" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Commande" EntityType="Self.Commande" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Detail_Commande" EntityType="Self.Detail_Commande" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Produit" EntityType="Self.Produit" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Ville" EntityType="Self.Ville" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK__Client__ville_id__267ABA7A" Association="Self.FK__Client__ville_id__267ABA7A">
+      <End Role="Ville" EntitySet="Ville" />
+      <End Role="Client" EntitySet="Client" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Commande__Id_Cli__300424B4" Association="Self.FK__Commande__Id_Cli__300424B4">
+      <End Role="Client" EntitySet="Client" />
+      <End Role="Commande" EntitySet="Commande" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Commande__Nom_Ve__30F848ED" Association="Self.FK__Commande__Nom_Ve__30F848ED">
+      <End Role="User" EntitySet="User" />
+      <End Role="Commande" EntitySet="Commande" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Detail_Co__Id_co__5CD6CB2B" Association="Self.FK__Detail_Co__Id_co__5CD6CB2B">
+      <End Role="Produit" EntitySet="Produit" />
+      <End Role="Detail_Commande" EntitySet="Detail_Commande" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Detail_Co__Id_Pr__5DCAEF64" Association="Self.FK__Detail_Co__Id_Pr__5DCAEF64">
+      <End Role="Commande" EntitySet="Commande" />
+      <End Role="Detail_Commande" EntitySet="Detail_Commande" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Produit__ID_Cate__5441852A" Association="Self.FK__Produit__ID_Cate__5441852A">
+      <End Role="Categorie" EntitySet="Categorie" />
+      <End Role="Produit" EntitySet="Produit" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>
